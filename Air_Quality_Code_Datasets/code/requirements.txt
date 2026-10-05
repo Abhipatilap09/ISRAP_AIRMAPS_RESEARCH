@@ -1,0 +1,7 @@
+numpy==2.3.5
+pandas==2.2.3
+scikit-learn==1.8.0
+joblib>=1.4,<2
+matplotlib>=3.9,<4
+einops>=0.8,<1
+# Install torch==2.6.0 separately; see README for CPU installation.

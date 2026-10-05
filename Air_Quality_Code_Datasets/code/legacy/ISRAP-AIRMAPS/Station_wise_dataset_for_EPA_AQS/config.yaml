@@ -1,0 +1,94 @@
+# Air Quality Analysis Pipeline Configuration
+# ISRAP / AIRMAPS Research  |  San Antonio, TX
+
+# ----- Paths (relative to Station_wise_dataset_for_EPA_AQS/) -----
+station_dir: "."
+era5_file: "../ERA5_hourly_formatted_00_23.csv"
+output_dir: "outputs"
+
+# ----- Station metadata -----
+station_site_map:
+  station1_data.csv: 32
+  station2_data.csv: 52
+  station3_data.csv: 59
+  station4_data.csv: 1069
+  station5_data.csv: 1080
+  station6_data.csv: 1087
+
+# Known characteristics (from ISRAP_AIRMAPS_Research_Analysis.docx)
+station_notes:
+  59:   "Station 3 – 33.6% negative SO2 values; systematic zero-offset drift"
+  1080: "Station 5 – SO2-only station; data ends 2023-03-13"
+  1087: "Station 6 – PM2.5-only station; only ~46 days of data"
+  52:   "Station 2 – 8.7% negative NO2; flag for investigation"
+
+# ----- Pollutants & ERA5 variables -----
+pollutants:
+  - CO
+  - NO2
+  - O3
+  - PM2.5
+  - SO2
+
+era5_features:
+  - temp_c
+  - wind_speed
+  - blh
+  - relative_humidity
+  - surface_pressure_hpa
+  - precip_mm
+  - u10
+  - v10
+
+# ----- Physical constraints -----
+pollutant_min:
+  CO: 0.0
+  NO2: 0.0
+  O3: 0.0
+  PM2.5: 0.0
+  SO2: 0.0
+
+# ----- Anomaly detection parameters -----
+iqr_multiplier: 3.0
+
+hampel_window: 24
+hampel_threshold: 3
+
+rolling_zscore_window: 168
+rolling_zscore_threshold: 3.5
+
+stl_period: 24
+
+isolation_forest_contamination: 0.05
+isolation_forest_n_estimators: 100
+
+# Minimum observations for each method to run
+min_obs_hampel: 48
+min_obs_stl: 720
+min_obs_if: 200
+
+# ----- Gap / imputation parameters -----
+short_gap_max: 2
+medium_gap_max: 24
+
+# Fraction of NaN above which pollutant is considered structurally missing
+structural_missing_threshold: 0.95
+
+# ----- Validation parameters -----
+validation_mask_fractions:
+  - 0.05
+  - 0.10
+  - 0.20
+
+validation_block_lengths:
+  short: 3
+  medium: 12
+  long: 48
+
+# ----- Reproducibility -----
+random_seed: 42
+
+# ----- Logging -----
+log_level: "INFO"
+log_file: "logs/pipeline.log"
+

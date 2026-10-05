@@ -1,0 +1,7 @@
+# Optional deep-learning dependencies
+torch>=2.0.0
+pypots>=0.4.0
+xgboost>=1.7.0
+# For PDF report generation:
+# weasyprint>=59.0
+
